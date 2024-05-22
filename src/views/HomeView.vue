@@ -51,11 +51,12 @@ import {fotmatParamsWithFilter} from "@/utils/fetchParams";
 import useFetchPokemon from "@/composables/useFetchPokemon";
 import {SORTED_POKEMON} from "@/enums/sortBy.enum";
 import {usePokemonStore} from "@/stores/pokemon.store";
+import type {SelectBoxRef} from "@/types/select";
 
 const {fetchListPokemon, fetchListPokemonTypes, responsePokemon, responsePokemonTypes, isLoading} = useFetchPokemon();
 const {setPokemonType} = usePokemonStore();
-const typeSelect = ref(null);
-const sortSelect = ref(null);
+const typeSelect = ref<SelectBoxRef | null>(null);
+const sortSelect = ref<SelectBoxRef | null>(null);
 const params = ref({
   pagination: {
     number: 1,
@@ -72,7 +73,7 @@ const fetchInitialData = async () => {
       fetchListPokemonTypes(), fetchListPokemon({params: {...fetchParams}})
     ]);
 
-    setPokemonType(responsePokemonTypes);
+    setPokemonType(responsePokemonTypes.value?.data);
 
   } catch (error) {
     console.log('Error data:', error);

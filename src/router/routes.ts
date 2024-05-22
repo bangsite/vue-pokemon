@@ -1,4 +1,4 @@
-export const constantRouterMap: AppRouteRecordRaw[] = [
+export const constantRouterMap = [
     {
         path: "/",
         component: () => import("@/views/HomeView.vue"),

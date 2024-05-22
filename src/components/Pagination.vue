@@ -5,7 +5,7 @@
         {{ page }}
       </span>
 
-      <button v-else class="btn" @click="changePage(page)" :disabled="page === currentPage">
+      <button v-else class="btn" @click="changePage(page as number)" :disabled="page === currentPage">
         {{ page }}
       </button>
     </template>

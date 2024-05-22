@@ -1,17 +1,25 @@
 import {ref, toRefs} from "vue";
-import {getListPokemon, getPokemonDetail, getPokemonSprite} from "@/services/modules/pokemonVand.service";
+import {
+    getListPokemon,
+    getPokemonDetail,
+    getPokemonSprite,
+    getPokemonTypes
+} from "@/services/modules/pokemonVand.service";
 
 export default function useFetchPokemon() {
     const isLoading = ref(false);
-    const response = ref([]);
+    const responsePokemon = ref(null);
+    const responsePokemonSprite = ref(null);
+    const responsePokemonDetail = ref(null);
+    const responsePokemonTypes = ref(null);
     const errors = ref(null);
 
-    const fetchListPokemon = async (params:{}) => {
+    const fetchListPokemon = async (params:{ [key: string]: any }) => {
         isLoading.value = true;
 
         try {
             const res = await getListPokemon(params);
-            response.value = res?.data;
+            responsePokemon.value = res.data;
         } catch (error) {
             const {data} = error as any;
             errors.value = data;
@@ -20,12 +28,25 @@ export default function useFetchPokemon() {
         }
     };
 
+    const fetchListPokemonTypes = async () => {
+        isLoading.value = true;
+
+        try {
+            const res = await getPokemonTypes();
+            responsePokemonTypes.value = res.data;
+        } catch (error) {
+            const {data} = error as any;
+            errors.value = data;
+        } finally {
+            isLoading.value = false;
+        }
+    };
     const fetchDetailPokemon = async (id: string) => {
         isLoading.value = true;
 
         try {
             const res = await getPokemonDetail(id);
-            response.value = res?.data?.result;
+            responsePokemonDetail.value = res.data;
         } catch (error) {
             const {data} = error as any;
             errors.value = data;
@@ -39,7 +60,7 @@ export default function useFetchPokemon() {
 
         try {
             const res = await getPokemonSprite(id);
-            response.value = res?.data;
+            responsePokemonSprite.value = res.data;
         } catch (error) {
             const {data} = error as any;
             errors.value = data;
@@ -50,8 +71,13 @@ export default function useFetchPokemon() {
 
     return {
         fetchListPokemon,
+        fetchListPokemonTypes,
         fetchDetailPokemon,
         fetchPokemonSprite,
-        isLoading, response, errors
+        responsePokemon,
+        responsePokemonDetail,
+        responsePokemonTypes,
+        responsePokemonSprite,
+        isLoading, errors
     };
 }

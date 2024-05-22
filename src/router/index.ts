@@ -1,36 +1,45 @@
-import type { App } from "vue";
-import { createRouter, createWebHistory } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
+import type {App} from "vue";
+import type {RouteRecordRaw} from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 
-import { constantRouterMap } from "./routes";
-// import { routeBeforeEach, routeAfterEach } from "./guard/routeBeforeEach.guard";
+import {constantRouterMap} from "./routes";
+import {useLoadingStore} from '@/stores/loading.store';
+import {storeToRefs} from "pinia";
+
 
 const router = createRouter({
-  strict: true,
-  history: createWebHistory(),
-  linkActiveClass: "active",
-  routes: constantRouterMap as RouteRecordRaw[],
-  scrollBehavior: () => ({ top: 0, behavior: "smooth" }),
+    strict: true,
+    history: createWebHistory(),
+    linkActiveClass: "active",
+    routes: constantRouterMap as RouteRecordRaw[],
+    scrollBehavior: () => ({top: 0, behavior: "smooth"}),
 });
 
-// router.beforeEach(routeBeforeEach);
-// router.afterEach(routeAfterEach);
+router.beforeEach((to, from, next) => {
+    const {startLoading} = useLoadingStore();
+    startLoading();
+    next();
+});
 
-export const resetRouter = (): void => {
-  const resetWhiteNameList = ["Redirect", "Login", "NotFound", "Root"];
+router.afterEach(() => {
+    const {cancelLoading} = useLoadingStore();
+    cancelLoading();
+});
 
-  router.getRoutes().forEach((route) => {
-    const { name } = route;
-    if (name && !resetWhiteNameList.includes(name as string)) {
-      router.hasRoute(name) && router.removeRoute(name);
-    }
-  });
-};
+// export const resetRouter = (): void => {
+//     const resetWhiteNameList = ["Redirect", "Login", "NotFound", "Root"];
+//
+//     router.getRoutes().forEach((route) => {
+//         const {name} = route;
+//         if (name && !resetWhiteNameList.includes(name as string)) {
+//             router.hasRoute(name) && router.removeRoute(name);
+//         }
+//     });
+// };
 
 export const setupRouter = async (app: App<Element>) => {
-  app.use(router);
-  // createRouterGuards(router, name);
-  // await router.isReady();
+    app.use(router);
+    // await router.isReady();
 };
 
 export default router;

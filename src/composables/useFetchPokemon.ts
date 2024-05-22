@@ -1,20 +1,21 @@
-import {ref, toRefs} from "vue";
+import {ref} from "vue";
 import {
     getListPokemon,
     getPokemonDetail,
     getPokemonSprite,
     getPokemonTypes
 } from "@/services/modules/pokemonVand.service";
+import type {PokemonDetailResponse, PokemonResponse, PokemonTypeResponse} from "@/types/pokemon";
 
 export default function useFetchPokemon() {
     const isLoading = ref(false);
-    const responsePokemon = ref(null);
+    const responsePokemon = ref<PokemonResponse | null>(null);
     const responsePokemonSprite = ref(null);
-    const responsePokemonDetail = ref(null);
-    const responsePokemonTypes = ref(null);
+    const responsePokemonDetail = ref<PokemonDetailResponse | null>(null);
+    const responsePokemonTypes = ref<PokemonTypeResponse | null>(null);
     const errors = ref(null);
 
-    const fetchListPokemon = async (params:{ [key: string]: any }) => {
+    const fetchListPokemon = async (params: { [key: string]: any }) => {
         isLoading.value = true;
 
         try {

@@ -1,0 +1,25 @@
+.header {
+  background-color: #e76f51;
+  background-image: url(@/assets/images/pokemon-banner.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  min-height: 12rem;
+  padding-bottom: 11rem;
+
+  img {
+    display: block;
+    max-width: 10rem;
+    margin: 0 auto;
+    width: max-content;
+
+    @media (min-width: 414px) {
+      max-width: 20rem;
+
+    }
+  }
+}

@@ -1,5 +1,33 @@
 .btn {
   border-radius: 6px;
   cursor: pointer;
-  padding: 2rem 3rem;
+  padding: 0.6rem 0.85rem;
+
+  &-primary{
+    background: linear-gradient(to right, #f4a261, #e76f51);
+    border: none;
+    color: #fff;
+    &:hover{
+      background-color: rgba(#0984e3, 0.85);
+    }
+  }
+
+  &-detail{
+    background: linear-gradient(to right, #f4a261, #e76f51);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 2rem;
+    &:hover{
+      background-color: rgba(#0984e3, 0.85);
+    }
+  }
+
+  &-tag{
+    background: linear-gradient(to right, #f4a261, #e76f51);
+    -webkit-background-clip: text;
+    color: transparent;
+    cursor:inherit;
+    padding: 0.1rem 1rem;
+    font-size: 14px;
+  }
 }

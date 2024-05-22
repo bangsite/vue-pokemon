@@ -5,7 +5,7 @@ interface State {
   loading: boolean;
 }
 
-export const useLoadingStore = defineStore("loading", {
+export const useLoadingStore = defineStore("LoadingStore", {
   state: (): State => {
     return {
       loadingCount: 0,

@@ -1,9 +1,6 @@
 import type { InternalAxiosRequestConfig } from "axios";
-import {onLoading} from "@/composables/useLoading";
-// import { i18n } from "@/plugins/i18n";
 
 const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  onLoading("start");
 
   const { headers } = config;
   const token = localStorage.getItem("token");

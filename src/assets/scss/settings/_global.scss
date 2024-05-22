@@ -1,0 +1,146 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f7f8f9;
+  color: #333;
+  font-family: $font-global;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+  transition: all 0.4s;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+}
+
+p{
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .subheading-1, .subheading-2, .subheading-3 {
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+
+  &.extra-large {
+    font-size: 48px;
+  }
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 23px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+
+.subheading-1 {
+  font-size: 15px;
+}
+
+.subheading-2 {
+  font-size: 13px;
+}
+
+.subheading-3 {
+  font-size: 12px;
+}
+
+.subheading-1,
+.subheading-2,
+.subheading-3 {
+  color: var(--accent);
+}
+
+// tablet portrait
+@media screen and (min-width: 768px) {
+  .h1, h1 {
+    font-size: 36px;
+
+    &.extra-large {
+      font-size: 64px;
+    }
+  }
+
+  .h2, h2 {
+    font-size: 30px;
+  }
+
+  .h3, h3 {
+    font-size: 28px;
+  }
+
+  .h4, h4 {
+    font-size: 24px;
+  }
+
+  .h5, h5 {
+    font-size: 20px;
+  }
+
+  .h6, h6 {
+    font-size: 16px;
+  }
+
+  .subheading-1 {
+    font-size: 16px;
+  }
+
+  .subheading-2 {
+    font-size: 14px;
+  }
+}
+
+img{
+  width: 100%;
+  object-fit: cover;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.title{
+  color:#f1c40f;
+  display: flex;
+  justify-content: center;
+  font-size: 72px;
+  font-weight: 700;
+  font-family: $font-global;
+  margin-bottom: 2rem;
+  text-shadow: 3px 1px 1px #3498db, 2px 2px 1px #165bfb, 4px 2px 1px #3498db, 3px 3px 1px #165bfb, 5px 3px 1px #3498db, 4px 4px 1px #165bfb, 6px 4px 1px #3498db, 5px 5px 1px #165bfb, 7px 5px 1px #3498db;
+}

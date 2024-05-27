@@ -1,6 +1,5 @@
 .card {
   margin-bottom: 2rem;
-  //min-height: 32rem;
 
   &-list {
     display: grid;
@@ -59,6 +58,7 @@
     color: #555;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    text-align: center;
   }
 
   &-empty {

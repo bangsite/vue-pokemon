@@ -24,6 +24,7 @@ const getPokemonDetail = async (id: string, config?: AxiosRequestConfig): Promis
 const getPokemonSprite = async (id: string, config?: AxiosRequestConfig): Promise<any> => {
     return await ApiService.get(`/pokemons/${id}/sprite`, {
         ...config,
+        responseType: "blob",
     });
 };
 

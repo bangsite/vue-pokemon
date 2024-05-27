@@ -5,9 +5,12 @@
       <SpinnerPokemon v-if="loading"/>
 
       <div class="card-item" v-for="item in data" :key="item.id">
-        <img src="../assets/images/placeholder-pokemon.png"
-             :data-src="`https://api.vandvietnam.com/api/pokemon-api/pokemons/${item.id}/sprite`"
-             alt="image pokemon" loading="lazy" @load="updateImage">
+        <img
+            :src="item.img  ? item.img  : placeholderPokemon"
+            :data-src="item.img "
+            alt="image pokemon"
+            loading="lazy"
+        />
 
         <div class="card-content">
           <p class="btn btn-tag"><strong>#{{ item?.number }}</strong></p>
@@ -45,11 +48,12 @@ import {defineAsyncComponent, ref} from "vue";
 import type {Pokemon} from "@/types/pokemon";
 import SpinnerPokemon from "@/components/SpinnerPokemon.vue";
 import useFetchPokemon from "@/composables/useFetchPokemon";
+import placeholderPokemon from "@/assets/images/placeholder-pokemon.png";
 
 const ModalBase = defineAsyncComponent(() => import('@/components/ModalBase.vue'));
 const PokemonDetail = defineAsyncComponent(() => import('@/components/PokemonDetail.vue'));
 
-defineProps({
+const props = defineProps({
   data: {
     type: Array as () => Pokemon[],
     default: () => [],
@@ -62,11 +66,6 @@ defineProps({
 const {fetchDetailPokemon, responsePokemonDetail} = useFetchPokemon();
 const isActive = ref(false);
 const currentNumber = ref(0);
-
-const updateImage = (event: Event) => {
-  let target = event.target as HTMLImageElement;
-  if (target.dataset.src) target.src = target.dataset.src;
-}
 
 const showPokemonDetail = (data: Pokemon) => {
   const {id, number} = data;

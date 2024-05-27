@@ -58,4 +58,4 @@ jobs:
                     passphrase: ${{ secrets.SSH_PASSPHRASE }}
                     script: |
                         cd /var/www/vue-pokemon
-                        pm2 startOrRestart ecosystem.config.cjs --env production
+                        pm2 startOrReload ecosystem.config.cjs --env production --update-env

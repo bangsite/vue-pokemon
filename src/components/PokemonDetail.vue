@@ -1,11 +1,11 @@
 <template>
   <div class="pokemon-card" v-if="data">
-    <img v-if="data?.id"
-         class="pokemon-card__img"
-         src="../assets/images/placeholder-pokemon.png"
-         :data-src="`https://api.vandvietnam.com/api/pokemon-api/pokemons/${data?.id}/sprite`"
-         alt="image pokemon"
-         loading="lazy" @load="updateImage">
+    <img
+        :src="data.img  ? data.img  : placeholderPokemon"
+        :data-src="data.img "
+        alt="image pokemon"
+        loading="lazy"
+    />
 
     <h4 class="pokemon-card__name">{{ data?.name }}</h4>
 
@@ -47,6 +47,8 @@
 <script setup lang="ts">
 import ProgressBar from "@/components/ProgressBar.vue";
 import {MAX_STATS} from "@/enums/statistic.enum";
+import {loadImage} from "@/utils/images";
+import placeholderPokemon from "@/assets/images/placeholder-pokemon.png";
 
 defineProps({
   data: {
@@ -59,11 +61,44 @@ defineProps({
     default: false
   }
 });
-const updateImage = (event: Event) => {
-  let target = event.target as HTMLImageElement;
-  if (target.dataset.src) target.src = target.dataset.src;
-}
+
+const maxRetries = 3;
+const retryDelay = 1000; // Initial delay of 1 second
+
+// const updateImage = (event: Event) => {
+//   let target = event.target as HTMLImageElement;
+//   if (target.dataset.src) target.src = target.dataset.src;
+// }
+
+const updateImage = async (event: Event, retryCount = 0) => {
+  const target = event.target as HTMLImageElement;
+
+  if (!target) return;
+
+  if (target.dataset?.src) {
+    try {
+      const src = await loadImage(target.dataset.src);
+
+      if (typeof src === "string") target.src = src;
+    } catch (error) {
+      if (retryCount < maxRetries) {
+        console.log(`Retrying to load image: ${target.dataset.src} (Attempt ${retryCount + 1})`);
+
+        setTimeout(() => updateImage(event, retryCount + 1), retryDelay * Math.pow(2, retryCount));
+
+      } else {
+        console.error("Image load failed after retries:", error);
+        target.src = "../assets/images/placeholder-pokemon.png";
+
+      }
+    }
+  }
+};
+
 </script>
 
 <style scoped>
+img{
+  max-width: 120px;
+}
 </style>

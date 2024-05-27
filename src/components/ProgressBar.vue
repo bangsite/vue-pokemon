@@ -1,6 +1,6 @@
 <template>
   <div class="progress">
-    <div class="progress-bar" :style="{width: `calc(${calculatePercentage(data,max)}% - 4px)`}">
+    <div class="progress-bar" :style="{width: `calc(${calculatePercentage(data,max)}% - 1.5px)`}">
 
     </div>
     <span class="progress-number">

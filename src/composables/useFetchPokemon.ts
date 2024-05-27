@@ -10,7 +10,7 @@ import type {PokemonDetailResponse, PokemonResponse, PokemonTypeResponse} from "
 export default function useFetchPokemon() {
     const isLoading = ref(false);
     const responsePokemon = ref<PokemonResponse | null>(null);
-    const responsePokemonSprite = ref(null);
+    const responsePokemonSprite = ref('');
     const responsePokemonDetail = ref<PokemonDetailResponse | null>(null);
     const responsePokemonTypes = ref<PokemonTypeResponse | null>(null);
     const errors = ref(null);
@@ -21,6 +21,13 @@ export default function useFetchPokemon() {
         try {
             const res = await getListPokemon(params);
             responsePokemon.value = res.data;
+
+            if (responsePokemon.value?.data) {
+                responsePokemon.value.data.map(async (pokemon: { [key: string]: any }) => {
+                    await fetchPokemonSprite(pokemon?.id);
+                    pokemon.img = responsePokemonSprite.value;
+                })
+            }
         } catch (error) {
             const {data} = error as any;
             errors.value = data;
@@ -48,6 +55,13 @@ export default function useFetchPokemon() {
         try {
             const res = await getPokemonDetail(id);
             responsePokemonDetail.value = res.data;
+
+            if (res.data?.data?.id) {
+                await fetchPokemonSprite(res.data.data.id);
+            }
+            if (responsePokemonDetail.value ?.data){
+                responsePokemonDetail.value.data['img'] = responsePokemonSprite.value;
+            }
         } catch (error) {
             const {data} = error as any;
             errors.value = data;
@@ -61,7 +75,9 @@ export default function useFetchPokemon() {
 
         try {
             const res = await getPokemonSprite(id);
-            responsePokemonSprite.value = res.data;
+
+            responsePokemonSprite.value = URL.createObjectURL(res.data);
+
         } catch (error) {
             const {data} = error as any;
             errors.value = data;
